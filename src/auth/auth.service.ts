@@ -7,7 +7,7 @@ import { UsersService } from '../users/users.service';
 import * as jwt from 'jsonwebtoken';
 
 import { MailerService } from '@nestjs-modules/mailer';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { Exception } from 'handlebars';
 
 @Injectable()
