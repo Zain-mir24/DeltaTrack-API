@@ -42,7 +42,7 @@ services:
         sync: false  # Set this in Render dashboard
 
   # PostgreSQL Database
-  - type: pspg
+  - type: pg
     name: deltatrack-db
     plan: free  # Change to 'starter' or higher for production
     region: oregon  # Should match web service region
