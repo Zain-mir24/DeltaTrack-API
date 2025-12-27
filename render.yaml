@@ -1,0 +1,51 @@
+services:
+  # Web Service for NestJS Application
+  - type: web
+    name: deltatrack-backend
+    runtime: node
+    plan: free  # Change to 'starter' or higher for production
+    region: oregon  # Change to your preferred region
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # PORT is automatically set by Render
+      - key: DATABASE_TYPE
+        value: postgresql
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: deltatrack-db
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: deltatrack-db
+          property: port
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: deltatrack-db
+          property: database
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: deltatrack-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: deltatrack-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true  # Render will generate a secure secret
+      - key: EMAIL
+        sync: false  # Set this in Render dashboard
+      - key: EMAIL_PASSWORD
+        sync: false  # Set this in Render dashboard
+
+  # PostgreSQL Database
+  - type: pspg
+    name: deltatrack-db
+    plan: free  # Change to 'starter' or higher for production
+    region: oregon  # Should match web service region
+    databaseName: deltatrack
+    postgresMajorVersion: 14
+
