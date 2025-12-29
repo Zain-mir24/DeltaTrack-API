@@ -8,8 +8,8 @@ export class CreateUserDto {
   @ApiProperty()
   readonly email: string;
 
-  @ApiProperty()
-  readonly verified: boolean;
+  @ApiProperty({ required: false })
+  readonly verified?: boolean | null;
   @ApiProperty()
   readonly role: string;
 }

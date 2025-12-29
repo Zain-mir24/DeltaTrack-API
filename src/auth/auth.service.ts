@@ -73,7 +73,8 @@ export class AuthService {
             HttpStatus.NOT_FOUND,
           );
         }
-        const update = await this.usersService.update(userData.id, { verified: true });
+        userData.verified = true;
+        const update = await this.usersService.update(userData.id, userData);
         if(!update){
           throw new Error("Error updating data")
         }
