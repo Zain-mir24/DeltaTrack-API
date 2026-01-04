@@ -8,17 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { ApplicationService } from 'src/application/application.service';
-import { CurrentUser } from 'src/decorators/user.decorator';
-import { CurrentApplication } from 'src/decorators/application.decorator';
-import { User } from 'src/users/entities/user.entity';
-import { Application } from 'src/application/entities/application.entity';
-import { ProjectKeyGuard } from 'src/guards/project-key.guard';
-import { Event } from './entities/event.entity';
+import { ApplicationService } from '../application/application.service';
+import { CurrentApplication } from '../decorators/application.decorator';
+import { Application } from '../application/entities/application.entity';
+import { ProjectKeyGuard } from '../guards/project-key.guard';
 @Controller('events')
 export class EventsController {
   constructor(

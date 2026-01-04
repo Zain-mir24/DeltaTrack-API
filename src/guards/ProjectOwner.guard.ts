@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext,ForbiddenException,Injectable } from "@nestjs/common";
-import { Observable } from "rxjs";
-import { ApplicationService } from "src/application/application.service";
+import { ApplicationService } from "../application/application.service";
 
 @Injectable()
 export class ProjectOwnerGuard implements CanActivate{

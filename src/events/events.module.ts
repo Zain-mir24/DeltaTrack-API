@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { EventsController } from './events.controller';
-import { ApplicationService } from 'src/application/application.service';
+import { ApplicationService } from '../application/application.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Application } from 'src/application/entities/application.entity';
-import { ProjectKeyGuard } from 'src/guards/project-key.guard';
+import { Application } from '../application/entities/application.entity';
+import { ProjectKeyGuard } from '../guards/project-key.guard';
 import { Event } from './entities/event.entity';
 
 @Module({
