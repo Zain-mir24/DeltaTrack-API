@@ -1,5 +1,4 @@
-import { CanActivate, ExecutionContext,ForbiddenException,Injectable, UnauthorizedException } from "@nestjs/common";
-
+import { CanActivate, ExecutionContext,Injectable, UnauthorizedException } from "@nestjs/common";
 @Injectable()
 export class ProjectTokenGuard implements CanActivate {
   projectsService: any;

@@ -61,20 +61,20 @@ export class ApplicationService {
   /**
    * Find one application by ID (only if user is the owner)
    */
-  async findOne(id: number, userId: number): Promise<Application> {
+  async findOne(id: string ,userId: number): Promise<Application> {
     const application = await this.applicationRepository.findOne({
-      where: { id },
+      where: { project_key: id },
     });
 
     if (!application) {
       throw new NotFoundException(`Application with ID ${id} not found`);
     }
-
     if (application.userId !== userId) {
       throw new ForbiddenException(
         'You do not have permission to access this application',
       );
     }
+  
 
     return application;
   }
@@ -83,11 +83,11 @@ export class ApplicationService {
    * Update an application (only if user is the owner)
    */
   async update(
-    id: number,
+    projectKey: string,
     updateApplicationDto: UpdateApplicationDto,
     userId: number,
   ): Promise<Application> {
-    const application = await this.findOne(id, userId);
+    const application = await this.findOne(projectKey, userId);
 
     // Update only the fields that are provided
     if (updateApplicationDto.name) {
@@ -100,8 +100,8 @@ export class ApplicationService {
   /**
    * Remove an application (only if user is the owner)
    */
-  async remove(id: number, userId: number): Promise<void> {
-    const application = await this.findOne(id, userId);
+  async remove(projectKey: string, userId: number): Promise<void> {
+    const application = await this.findOne(projectKey, userId);
     await this.applicationRepository.remove(application);
   }
 

@@ -46,7 +46,7 @@ export class ApplicationController {
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Application not found' })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Access denied' })
   findOne(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.applicationService.findOne(+id, user.id);
+    return this.applicationService.findOne(id, user.id);
   }
 
   @Patch(':id')
@@ -58,7 +58,7 @@ export class ApplicationController {
     @Body() updateApplicationDto: UpdateApplicationDto,
     @CurrentUser() user: User,
   ) {
-    return this.applicationService.update(+id, updateApplicationDto, user.id);
+    return this.applicationService.update(id, updateApplicationDto, user.id);
   }
 
   @Delete(':id')
@@ -67,6 +67,6 @@ export class ApplicationController {
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Application not found' })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Access denied' })
   remove(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.applicationService.remove(+id, user.id);
+    return this.applicationService.remove(id, user.id);
   }
 }
