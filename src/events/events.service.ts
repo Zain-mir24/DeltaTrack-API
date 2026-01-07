@@ -24,13 +24,18 @@ export class EventsService {
    
     return savedEvent;
   }
-
-  findAll() {
-    return `This action returns all events`;
+  /**
+   * 
+   * @returns Returns even for a specific project
+   */
+  findByApplicationId(applicationId: number) {
+    return this.eventRepository.find({
+      where: { applicationId },
+    });
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+ 
+  findOne() {
+    return `This action returns  event`;
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {

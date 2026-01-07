@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -28,26 +29,18 @@ export class EventsController {
     @Body() body: CreateEventDto,
     @CurrentApplication() application: Application,
   ) {
-   
-    console.log('Application:', application);
-    console.log('📥 EVENT RECEIVED');
-    console.log('Project:', application.project_key);
-    console.log('Payload:', body);
+  
 
     const createEvent = await this.eventsService.create(body,application);
 
-    return { status: 'ok' };
+    return { status: 'Event has been registered', event: createEvent  };
   }
  
 
-  @Get()
-  findAll() {
-    return this.eventsService.findAll();
-  }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventsService.findOne(+id);
+  @Get(':applicationId')
+  findOne(@Param('applicationId',ParseIntPipe) applicationId: number) {
+    return this.eventsService.findByApplicationId(applicationId);
   }
 
   @Patch(':id')
