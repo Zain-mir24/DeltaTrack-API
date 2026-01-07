@@ -9,7 +9,7 @@ import { PageDto } from '../common/page.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as jwt from 'jsonwebtoken';
-import { Application } from 'src/application/entities/application.entity';
+import { Application } from '../application/entities/application.entity';
 
 @Injectable()
 export class UsersService {
