@@ -8,7 +8,7 @@ export class CreateEventDto {
     message: string;
 
     @ApiProperty({ description: 'Stack trace or additional debug info', example: 'Error: Something went wrong\n    at Object.<anonymous> (app.js:10:15)' })
-    stack: string;
+    stack?: string;
 
     @ApiProperty({ description: 'Event timestamp (ISO 8601)', example: '2026-01-04T12:34:56.789Z', type: String, format: 'date-time' })
     timestamp: Date;

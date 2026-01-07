@@ -15,7 +15,7 @@ export class EventsService {
     event.timestamp = new Date(createEventDto.timestamp);
     event.type = createEventDto.type;
     event.message = createEventDto.message;
-    event.stack = createEventDto.stack;
+    event.stack = createEventDto.stack ?? null;
     event.lineno = createEventDto.lineno ?? null;
     event.colno = createEventDto.colno ?? null;
     event.source = createEventDto.source ?? null;

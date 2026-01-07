@@ -2,19 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { PageOptionsDto } from '../common/dtos';
 import { PageMetaDto } from '../common/page.meta.dto';
 import { PageDto } from '../common/page.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as jwt from 'jsonwebtoken';
+import { Application } from 'src/application/entities/application.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Application)
+    private readonly applicationRepository: Repository<Application>
   ) {}
   async create(createUserDto: CreateUserDto): Promise<any> {
     const {
@@ -133,5 +136,22 @@ export class UsersService {
       // Handle the case where the object doesn't exist.
       throw new NotFoundException('Object not found');
     }
+  }
+
+  async getUserApplications(userId: number) {
+    try{
+   console.log('Fetching applications for user ID:', userId);
+    // Application has a userId column; query applications directly by that column.
+    const applications = await this.applicationRepository.find({
+      where: { userId: userId },
+    });
+
+    // Return the array (may be empty if the user has no applications).
+    return applications;
+    }catch(e){
+      console.error('Error fetching applications for user ID:', userId, e);
+      throw e;
+    }
+ 
   }
 }

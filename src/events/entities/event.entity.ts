@@ -13,8 +13,8 @@ export class Event {
     type: string;
     @Column()
     message: string;
-    @Column()
-    stack: string;
+    @Column({type:'text',nullable: true})
+    stack: string|null;
     @Column()
     timestamp: Date;
   

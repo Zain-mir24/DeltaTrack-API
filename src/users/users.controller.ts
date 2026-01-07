@@ -6,18 +6,24 @@ import { PageOptionsDto } from '../common/dtos';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CurrentUser } from '../decorators/user.decorator';
 import { User } from './entities/user.entity';
-
+import { ParseIntPipe } from '@nestjs/common';
 @Controller('users')
+  @UseGuards(JwtAuthGuard)
+
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('profile')
-  @UseGuards(JwtAuthGuard)
   getProfile(@CurrentUser() user: User) {
     // The CurrentUser decorator extracts the authenticated user from the request
     // This is set by JwtAuthGuard after verifying the JWT token
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
+  }
+   @Get('applications')
+  getUserApplications(@CurrentUser() user: User) {
+   
+    return this.usersService.getUserApplications(user.id);
   }
 
   @Post()
@@ -32,8 +38,8 @@ export class UsersController {
 
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id',ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')
@@ -45,4 +51,6 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
+ 
 }
