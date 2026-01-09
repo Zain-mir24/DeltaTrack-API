@@ -1,29 +1,33 @@
-import { SerializeOptions } from "@nestjs/common";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SerializeOptions } from '@nestjs/common';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('events')
 @SerializeOptions({ excludeExtraneousValues: true })
-
 export class Event {
-    @PrimaryGeneratedColumn()
-    id: number;
-    @Column()
-    applicationId: number;
-    @Column()
-    type: string;
-    @Column()
-    message: string;
-    @Column({type:'text',nullable: true})
-    stack: string|null;
-    @Column()
-    timestamp: Date;
-  
-    @Column({ type: 'int', nullable: true })
-    lineno: number | null;
-  
-    @Column({ type: 'int', nullable: true })
-    colno: number | null;
-  
-    @Column({ type: 'varchar', nullable: true })
-    source: string | null;
+  @PrimaryGeneratedColumn()
+  id: number;
+  @Column()
+  applicationId: number;
+  @Column()
+  type: string;
+  @Column({type:'text',nullable:true})
+  message: string;
+  @Column({ type: 'text', nullable: true })
+  stack: string | null;
+  @Column()
+  timestamp: Date;
+
+  @Column({ type: 'int', nullable: true })
+  lineno: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  colno: number | null;
+
+  @Column({ type: 'varchar', nullable: true })
+  source: string | null;
+
+  @Column({ type: 'varchar', nullable: true })
+  status: string;
+  @Column({ type: 'varchar', nullable: true })
+  url: string;
 }

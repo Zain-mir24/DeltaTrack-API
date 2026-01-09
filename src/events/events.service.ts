@@ -10,7 +10,8 @@ export class EventsService {
   constructor(@InjectRepository(Event) 
   private readonly eventRepository: Repository<Event>){}
   async create(createEventDto: CreateEventDto,application: Application) {
-    const event = new Event();
+  try{
+  const event = new Event();
     event.applicationId = application.id;
     event.timestamp = new Date(createEventDto.timestamp);
     event.type = createEventDto.type;
@@ -19,10 +20,13 @@ export class EventsService {
     event.lineno = createEventDto.lineno ?? null;
     event.colno = createEventDto.colno ?? null;
     event.source = createEventDto.source ?? null;
-   const savedEvent = await this.eventRepository.save(event);
-  console.log('Saved Event:', savedEvent);
-   
+    const savedEvent = await this.eventRepository.save(event);
     return savedEvent;
+  }catch(err){
+    console.error('Error saving event:', err);
+    throw err;
+  }
+  
   }
   /**
    * 
