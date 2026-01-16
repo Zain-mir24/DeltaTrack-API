@@ -16,6 +16,7 @@ import { ApplicationService } from '../application/application.service';
 import { CurrentApplication } from '../decorators/application.decorator';
 import { Application } from '../application/entities/application.entity';
 import { ProjectKeyGuard } from '../guards/project-key.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 @Controller('events')
 export class EventsController {
   constructor(
@@ -29,17 +30,13 @@ export class EventsController {
     @Body() body: CreateEventDto,
     @CurrentApplication() application: Application,
   ) {
-  
-
-    const createEvent = await this.eventsService.create(body,application);
-
-    return { status: 'Event has been registered', event: createEvent  };
+    const createEvent = await this.eventsService.create(body, application);
+    return { status: 'Event has been registered', event: createEvent };
   }
- 
-
 
   @Get(':applicationId')
-  findOne(@Param('applicationId',ParseIntPipe) applicationId: number) {
+  @UseGuards(JwtAuthGuard)
+  findOne(@Param('applicationId', ParseIntPipe) applicationId: number) {
     return this.eventsService.findByApplicationId(applicationId);
   }
 

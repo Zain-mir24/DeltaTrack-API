@@ -9,10 +9,15 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ApplicationModule } from './application/application.module';
+import {ThrottlerModule} from "@nestjs/throttler"
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    ThrottlerModule.forRoot([{
+      ttl:60,
+      limit:20
+    }]),
     TypeOrmModule.forRoot({ ...typeOrmConfig, autoLoadEntities: false }),
     EventsModule,
     MailerModule.forRoot({
