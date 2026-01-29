@@ -4,7 +4,7 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { Application } from '../application/entities/application.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 @Injectable()
 export class EventsService {
   constructor(@InjectRepository(Event) 
@@ -35,6 +35,23 @@ export class EventsService {
   findByApplicationId(applicationId: number) {
     return this.eventRepository.find({
       where: { applicationId },
+    });
+  }
+
+  /**
+   * Find events for a specific application within a given date range.
+   */
+  findByApplicationIdAndDateRange(
+    applicationId: number,
+    from: Date,
+    to: Date,
+  ) {
+    return this.eventRepository.find({
+      where: {
+        applicationId,
+        timestamp: Between(from, to),
+      },
+      order: { timestamp: 'ASC' },
     });
   }
  

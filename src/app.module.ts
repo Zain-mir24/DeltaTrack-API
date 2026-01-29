@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ApplicationModule } from './application/application.module';
 import {ThrottlerModule} from "@nestjs/throttler"
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import {ThrottlerModule} from "@nestjs/throttler"
     AuthModule,
     UsersModule,
     ApplicationModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

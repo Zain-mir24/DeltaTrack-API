@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -38,6 +39,22 @@ export class EventsController {
   @UseGuards(JwtAuthGuard)
   findOne(@Param('applicationId', ParseIntPipe) applicationId: number) {
     return this.eventsService.findByApplicationId(applicationId);
+  }
+
+  @Get(':applicationId/range')
+  @UseGuards(JwtAuthGuard)
+  async findByDateRange(
+    @Param('applicationId', ParseIntPipe) applicationId: number,
+    @Query('from') from: string,
+    @Query('to') to: string,
+  ) {
+    const fromDate = from ? new Date(from) : new Date(0);
+    const toDate = to ? new Date(to) : new Date();
+    return this.eventsService.findByApplicationIdAndDateRange(
+      applicationId,
+      fromDate,
+      toDate,
+    );
   }
 
   @Patch(':id')
